@@ -6,7 +6,7 @@
 /*   By: emaillet <emaillet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 18:39:59 by emaillet          #+#    #+#             */
-/*   Updated: 2024/11/21 00:59:34 by emaillet         ###   ########.fr       */
+/*   Updated: 2024/11/21 21:26:18 by emaillet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,7 @@
 # define RES  "\x1B[0m"
 
 void	client_init(int server_pid, char *str);
+void	chatosi(pid_t server_pid, char c);
+void	mt_sigsend(pid_t server_pid, int sig);
 
 #endif

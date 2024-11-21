@@ -6,7 +6,7 @@
 /*   By: emaillet <emaillet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 18:39:54 by emaillet          #+#    #+#             */
-/*   Updated: 2024/11/21 01:54:41 by emaillet         ###   ########.fr       */
+/*   Updated: 2024/11/21 21:54:30 by emaillet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,24 +33,53 @@ int	main(int argc, char *argv[])
 void	client_init(pid_t server_pid, char *str)
 {
 	int	i;
-	int	j;
 
 	i = 0;
-	j = 0;
 	ft_printf("String : %s\n", str);
 	if (kill(server_pid, SIGUSR2) == -1)
 		ft_printf(RED"[Error] : Invalid server pid");
-	while (str[i] != 0)
+	while (str[i])
 	{
-		j = (int)str[i];
-		while (j)
-		{
-			kill(server_pid, SIGUSR1);
-			usleep(2);
-			j--;
-		}
-		kill(server_pid, SIGUSR2);
-		usleep(1);
+		chatosi(server_pid, str[i]);
+		usleep(35);
 		i++;
 	}
+}
+
+void	chatosi(pid_t server_pid, char c)
+{
+	int	d;
+	int	u;
+
+	u = c % 10;
+	d = (((c % 100) - u) / 10);
+	if (c >= 100)
+		mt_sigsend(server_pid, 1);
+	mt_sigsend(server_pid, 2);
+	while (d)
+	{
+		mt_sigsend(server_pid, 1);
+		d--;
+	}
+	mt_sigsend(server_pid, 2);
+	while (u)
+	{
+		mt_sigsend(server_pid, 1);
+		u--;
+	}
+	mt_sigsend(server_pid, 2);
+}
+
+void	mt_sigsend(pid_t server_pid, int sig)
+{
+	const int	cooldown = 15;
+
+	if (sig == 1)
+		kill(server_pid, SIGUSR1);
+	else if (sig == 2)
+	{
+		kill(server_pid, SIGUSR2);
+		usleep(5);
+	}
+	usleep(cooldown);
 }
