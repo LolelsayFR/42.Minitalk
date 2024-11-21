@@ -1,0 +1,8 @@
+Optimiser le transfert de char avec les ping (au lieu d'envoyer 127 ping pour ~ on envoi ce genre de ping : 21211211111112 
+
+(en gros on envoi 127 decimal par decimal et on multiplie par 10 apres chacun des ping2, 
+														sauf si on a 2 ping2 d'affiler, danc ce cas la on stock et on reset))
+
+On stock avant d'imprimer afin de gerer plus tard plus facilement avec un printf
+
+on ce penche sur les bonus
