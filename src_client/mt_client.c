@@ -5,81 +5,93 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: emaillet <emaillet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/20 18:39:54 by emaillet          #+#    #+#             */
-/*   Updated: 2024/11/21 21:54:30 by emaillet         ###   ########.fr       */
+/*   Created: 2024/12/21 22:55:28 by emaillet          #+#    #+#             */
+/*   Updated: 2024/12/22 00:17:28 by emaillet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mt_client.h"
 #include <signal.h>
 #include <unistd.h>
+#include <stdlib.h>
 
-int	main(int argc, char *argv[])
+int	set_status(int i)
 {
-	ft_printf("Client PID : %i\n", getpid());
-	if (argc == 3 && ft_atoi(argv[1]) != 0)
-	{
-		ft_printf(GRN"[Info] : Initialization\n"RES);
-		client_init((pid_t)ft_atoi(argv[1]), argv[2]);
-	}
-	else
-	{
-		ft_printf(RED"[Error] : Invalid arguments !\n"RES);
-		ft_printf(YEL"[Usage] : ./client `server_pid` `string_message`\n"RES);
-	}
-	return (0);
+	static int	check = 0;
+
+	if (i >= 0)
+		check = i;
+	return (check);
 }
 
-void	client_init(pid_t server_pid, char *str)
+void	sig_handle(int signal)
+{
+	if (signal == SIGUSR1)
+		set_status(1);
+	else
+	{
+		while (!set_status(-1))
+			usleep(10);
+		set_status(0);
+	}
+}
+
+void	ft_send_char(unsigned char c, int pid)
 {
 	int	i;
 
 	i = 0;
-	ft_printf("String : %s\n", str);
-	if (kill(server_pid, SIGUSR2) == -1)
-		ft_printf(RED"[Error] : Invalid server pid");
-	while (str[i])
+	while (i < 8)
 	{
-		chatosi(server_pid, str[i]);
-		usleep(35);
+		if (c & 0x01)
+			kill(pid, SIGUSR2);
+		else
+			kill(pid, SIGUSR1);
+		c = c >> 1;
+		sig_handle(0);
 		i++;
 	}
 }
 
-void	chatosi(pid_t server_pid, char c)
+void	ft_send_strlen(int len, int pid)
 {
-	int	d;
-	int	u;
+	int	i;
 
-	u = c % 10;
-	d = (((c % 100) - u) / 10);
-	if (c >= 100)
-		mt_sigsend(server_pid, 1);
-	mt_sigsend(server_pid, 2);
-	while (d)
+	i = 0;
+	while (i < 32)
 	{
-		mt_sigsend(server_pid, 1);
-		d--;
+		if (len & 0x01)
+			kill(pid, SIGUSR2);
+		else
+			kill(pid, SIGUSR1);
+		len = len >> 1;
+		sig_handle(0);
+		i++;
 	}
-	mt_sigsend(server_pid, 2);
-	while (u)
-	{
-		mt_sigsend(server_pid, 1);
-		u--;
-	}
-	mt_sigsend(server_pid, 2);
 }
 
-void	mt_sigsend(pid_t server_pid, int sig)
+int	main(int argc, char **argv)
 {
-	const int	cooldown = 15;
+	char	*str;
+	int		len;
+	int		pid;
+	int		i;
 
-	if (sig == 1)
-		kill(server_pid, SIGUSR1);
-	else if (sig == 2)
+	i = 0;
+	if (argc != 3)
 	{
-		kill(server_pid, SIGUSR2);
-		usleep(5);
+		ft_printf(RED"[ERROR] Usage: %s <server_pid> <string>\n"RES, argv[0]);
+		return (EXIT_FAILURE);
 	}
-	usleep(cooldown);
+	pid = ft_atoi(argv[1]);
+	if (pid <= 0)
+		return (EXIT_FAILURE);
+	str = argv[2];
+	len = ft_strlen(str);
+	signal(SIGUSR1, sig_handle);
+	ft_send_strlen(len, pid);
+	while (str[i])
+		ft_send_char(str[i++], pid);
+	ft_send_char('\0', pid);
+	return (EXIT_SUCCESS);
 }

@@ -1,0 +1,6 @@
+[submodule "src_shared/ft_printf"]
+	path = src_shared/ft_printf
+	url = git@github.com:LolelsayFR/ft_printf.git
+[submodule "src_shared/libft"]
+	path = src_shared/libft
+	url = git@github.com:LolelsayFR/libft.git

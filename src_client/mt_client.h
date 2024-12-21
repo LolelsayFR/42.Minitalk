@@ -6,7 +6,7 @@
 /*   By: emaillet <emaillet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 18:39:59 by emaillet          #+#    #+#             */
-/*   Updated: 2024/11/21 21:26:18 by emaillet         ###   ########.fr       */
+/*   Updated: 2024/12/21 23:47:45 by emaillet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,5 @@
 # define GRN  "\x1B[32m"
 # define YEL  "\x1B[33m"
 # define RES  "\x1B[0m"
-
-void	client_init(int server_pid, char *str);
-void	chatosi(pid_t server_pid, char c);
-void	mt_sigsend(pid_t server_pid, int sig);
 
 #endif

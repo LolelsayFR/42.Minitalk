@@ -6,7 +6,7 @@
 /*   By: emaillet <emaillet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 18:40:09 by emaillet          #+#    #+#             */
-/*   Updated: 2024/11/21 00:59:46 by emaillet         ###   ########.fr       */
+/*   Updated: 2024/12/21 14:44:14 by emaillet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,5 @@
 # define GRN  "\x1B[32m"
 # define YEL  "\x1B[33m"
 # define RES  "\x1B[0m"
-
-void	signal_handler(int sig);
 
 #endif
