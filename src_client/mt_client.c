@@ -6,15 +6,15 @@
 /*   By: emaillet <emaillet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 22:55:28 by emaillet          #+#    #+#             */
-/*   Updated: 2024/12/22 00:17:28 by emaillet         ###   ########.fr       */
+/*   Updated: 2024/12/23 17:06:04 by emaillet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mt_client.h"
-#include <signal.h>
-#include <unistd.h>
-#include <stdlib.h>
 
+/* ************************************************************************** */
+/* Set the signal checkup status and/or just return then.                     */
+/* ************************************************************************** */
 int	set_status(int i)
 {
 	static int	check = 0;
@@ -24,6 +24,9 @@ int	set_status(int i)
 	return (check);
 }
 
+/* ************************************************************************** */
+/* Handle the server confirmation signal                                      */
+/* ************************************************************************** */
 void	sig_handle(int signal)
 {
 	if (signal == SIGUSR1)
@@ -36,6 +39,9 @@ void	sig_handle(int signal)
 	}
 }
 
+/* ************************************************************************** */
+/* Send char (Size = 8 bit) via signal, bit per bit                           */
+/* ************************************************************************** */
 void	ft_send_char(unsigned char c, int pid)
 {
 	int	i;
@@ -53,6 +59,9 @@ void	ft_send_char(unsigned char c, int pid)
 	}
 }
 
+/* ************************************************************************** */
+/* Send Str len int (Size = 32 bit) via signak, bit per bit                   */
+/* ************************************************************************** */
 void	ft_send_strlen(int len, int pid)
 {
 	int	i;
@@ -70,6 +79,9 @@ void	ft_send_strlen(int len, int pid)
 	}
 }
 
+/* ************************************************************************** */
+/* Main function with some check and functions !                              */
+/* ************************************************************************** */
 int	main(int argc, char **argv)
 {
 	char	*str;
@@ -95,3 +107,6 @@ int	main(int argc, char **argv)
 	ft_send_char('\0', pid);
 	return (EXIT_SUCCESS);
 }
+/* ************************************************************************** */
+/* End of file...                                                             */
+/* ************************************************************************** */

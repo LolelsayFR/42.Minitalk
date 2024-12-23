@@ -6,16 +6,18 @@
 /*   By: emaillet <emaillet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 18:40:09 by emaillet          #+#    #+#             */
-/*   Updated: 2024/12/21 14:44:14 by emaillet         ###   ########.fr       */
+/*   Updated: 2024/12/23 16:19:05 by emaillet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MT_SERVER_H
 # define MT_SERVER_H
 # include <signal.h>
+# include <signal.h>
+# include <unistd.h>
+# include <stdlib.h>
 # include "../src_shared/ft_printf/func/ft_printf.h"
 # include "../src_shared/libft/libft.h"
-# include <unistd.h>
 
 # define RED  "\x1B[31m"
 # define GRN  "\x1B[32m"

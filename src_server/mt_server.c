@@ -6,16 +6,15 @@
 /*   By: emaillet <emaillet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 22:55:34 by emaillet          #+#    #+#             */
-/*   Updated: 2024/12/22 00:02:37 by emaillet         ###   ########.fr       */
+/*   Updated: 2024/12/23 17:05:19 by emaillet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mt_server.h"
-#include <signal.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <stdio.h>
 
+/* ************************************************************************** */
+/* Handle strlen int bit per bit (Size of int = 32 bit)                       */
+/* ************************************************************************** */
 void	ft_sv_strlen(int *curr_bit, char **str, int *len_received, int signal)
 {
 	static int	len_val = 0;
@@ -35,6 +34,9 @@ void	ft_sv_strlen(int *curr_bit, char **str, int *len_received, int signal)
 		(*curr_bit)++;
 }
 
+/* ************************************************************************** */
+/* Make minitalk server great again ! (Its just a free and re-init var's)     */
+/* ************************************************************************** */
 void	mt_sv_restart(int *len_received, char **str, int *i)
 {
 	*len_received = 0;
@@ -47,6 +49,9 @@ void	mt_sv_restart(int *len_received, char **str, int *i)
 	*i = 0;
 }
 
+/* ************************************************************************** */
+/* Handle sig's and convert them in some char bit per bit (char = 8 bit)      */
+/* ************************************************************************** */
 void	sv_sig_handler(int signal, siginfo_t *info, void *context)
 {
 	static int	char_value = 0;
@@ -76,6 +81,9 @@ void	sv_sig_handler(int signal, siginfo_t *info, void *context)
 	kill(info->si_pid, SIGUSR1);
 }
 
+/* ************************************************************************** */
+/* Just the main function, define sig action and some tweaks                  */
+/* ************************************************************************** */
 int	main(void)
 {
 	struct sigaction	sa;
@@ -89,3 +97,7 @@ int	main(void)
 		pause();
 	return (EXIT_SUCCESS);
 }
+
+/* ************************************************************************** */
+/* End of file...                                                             */
+/* ************************************************************************** */

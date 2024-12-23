@@ -6,7 +6,7 @@
 /*   By: emaillet <emaillet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 18:39:59 by emaillet          #+#    #+#             */
-/*   Updated: 2024/12/21 23:47:45 by emaillet         ###   ########.fr       */
+/*   Updated: 2024/12/23 16:17:36 by emaillet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define MT_CLIENT_H
 
 # include <signal.h>
+# include <unistd.h>
+# include <stdlib.h>
 # include "../src_shared/ft_printf/func/ft_printf.h"
 # include "../src_shared/libft/libft.h"
 
