@@ -6,11 +6,12 @@
 /*   By: emaillet <emaillet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 22:55:34 by emaillet          #+#    #+#             */
-/*   Updated: 2024/12/23 17:05:19 by emaillet         ###   ########.fr       */
+/*   Updated: 2025/02/13 18:12:14 by emaillet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mt_server.h"
+#include <signal.h>
 
 /* ************************************************************************** */
 /* Handle strlen int bit per bit (Size of int = 32 bit)                       */
@@ -82,7 +83,7 @@ void	sv_sig_handler(int signal, siginfo_t *info, void *context)
 }
 
 /* ************************************************************************** */
-/* Just the main function, define sig action and some tweaks                  */
+/* Just the main function, define sig action.                                 */
 /* ************************************************************************** */
 int	main(void)
 {
@@ -91,6 +92,8 @@ int	main(void)
 	ft_printf(GRN"Server PID: %d\n"RES, getpid());
 	sa.sa_flags = SA_SIGINFO;
 	sa.sa_sigaction = sv_sig_handler;
+	sigemptyset(&sa.sa_mask);
+	sigaddset(&sa.sa_mask, SIGINT);
 	sigaction(SIGUSR1, &sa, NULL);
 	sigaction(SIGUSR2, &sa, NULL);
 	while (1)
